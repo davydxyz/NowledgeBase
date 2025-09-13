@@ -1,0 +1,148 @@
+/* Chat Mode Styles */
+.chat-mode-content {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.chat-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-history::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.chat-history::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.empty-state {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+}
+
+.chat-message {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border-left: 3px solid #007AFF;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  word-break: break-word;
+}
+
+.chat-message.loading {
+  border-left-color: #ffa500;
+  opacity: 0.8;
+}
+
+.question {
+  margin-bottom: 8px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.response {
+  color: #555;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.response h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.response p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.response-type-badge {
+  background: #007AFF;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Chat Input Form */
+.input-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.response-type-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.response-type-selector label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  min-width: 100px;
+}
+
+.response-type-selector select {
+  padding: 8px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: white;
+  outline: none;
+  transition: border-color 0.2s;
+  flex: 1;
+}
+
+.response-type-selector select:focus {
+  border-color: #007AFF;
+}
+
+.response-type-selector select:disabled {
+  background: #f5f5f5;
+  color: #666;
+}

@@ -1,0 +1,154 @@
+/* Graph Mode Core Styles - Containers and Controls */
+
+.graph-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: #fafafa;
+}
+
+.graph-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 16px;
+  color: #666;
+}
+
+.graph-controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+}
+
+.graph-control-btn {
+  background: #007AFF;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.graph-control-btn:hover {
+  background: #0056CC;
+  transform: translateY(-1px);
+}
+
+.cancel-linking {
+  background: #ff3b30 !important;
+}
+
+.cancel-linking:hover {
+  background: #d70015 !important;
+}
+
+.linking-instruction {
+  background: #10b981;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  animation: pulse-green 1.5s infinite;
+}
+
+.debug-message {
+  background: #f0f9ff;
+  color: #0369a1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: monospace;
+  border: 1px solid #bae6fd;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.hover-message {
+  background: #10b981;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  animation: pulse-green 1.5s infinite;
+}
+
+.graph-filter-info {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* React Flow Integration */
+.react-flow-wrapper {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  background: #fafafa;
+}
+
+.react-flow__viewport {
+  flex: 1;
+}
+
+.react-flow__node {
+  cursor: pointer;
+}
+
+.react-flow__handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: #007AFF !important;
+  border: 2px solid white !important;
+}
+
+.react-flow__handle.source {
+  background: #10b981 !important;
+}
+
+.react-flow__handle.target {
+  background: #f59e0b !important;
+}
+
+/* Animations */
+@keyframes pulse-green {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+  }
+}
+
+@keyframes pulse-blue {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+  }
+}

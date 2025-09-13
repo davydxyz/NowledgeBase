@@ -1,0 +1,149 @@
+/* Save to Notes Actions */
+.save-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: 8px;
+}
+
+.save-to-notes-btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.save-to-notes-btn.primary {
+  background: #28a745;
+  color: white;
+}
+
+.save-to-notes-btn.primary:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.save-to-notes-btn.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.save-to-notes-btn.secondary:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+/* Context Menu Styles */
+.context-menu {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  min-width: 120px;
+}
+
+.context-menu-item {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.context-menu-item:hover {
+  background: #f8f9fa;
+}
+
+.context-menu-item.delete {
+  color: #dc3545;
+}
+
+.context-menu-item.delete:hover {
+  background: #f8d7da;
+}
+
+/* Rename Input */
+.rename-input {
+  background: white;
+  border: 1px solid #007AFF;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  outline: none;
+  min-width: 0;
+  flex: 1;
+}
+
+/* Debug Info */
+.debug-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.reload-btn {
+  background: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reload-btn:hover {
+  background: #0056CC;
+}
+
+/* Filter Info */
+.filter-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e7f3ff;
+  border: 1px solid #007AFF;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.filter-label {
+  color: #0056CC;
+  font-weight: 500;
+}
+
+.clear-filter-btn {
+  background: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.clear-filter-btn:hover {
+  background: #0056CC;
+}

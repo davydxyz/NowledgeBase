@@ -1,0 +1,15 @@
+/* Import modular CSS files */
+@import './styles/globals.css';
+@import './styles/memo-space.css';
+@import './styles/toast-notifications.css';
+@import './styles/mode-toggle.css';
+@import './styles/utilities.css';
+@import './styles/reader-mode.css';
+@import './styles/smart-categorization.css';
+@import './styles/chat-mode.css';
+@import './styles/notes-system.css';
+@import './styles/category-tree.css';
+@import './styles/layout.css';
+@import './styles/graph-core.css';
+@import './styles/graph-nodes.css';
+@import './styles/forms.css';

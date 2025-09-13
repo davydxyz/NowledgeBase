@@ -1,0 +1,52 @@
+/* Form Elements Styles */
+
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #333;
+  flex-shrink: 0;
+}
+
+textarea {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  border-color: #007AFF;
+}
+
+textarea:disabled {
+  background: #f5f5f5;
+  color: #666;
+}
+
+button {
+  padding: 12px 20px;
+  background: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: #0056CC;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

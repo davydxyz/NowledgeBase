@@ -1,0 +1,229 @@
+/* Graph Mode Node Styles */
+
+.graph-node {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0;
+  min-width: 200px;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.graph-node:hover {
+  border-color: #007AFF;
+  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.graph-node.linking-source {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2) !important;
+  animation: pulse-green 1.5s infinite;
+}
+
+.graph-node.linking-target {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2) !important;
+  animation: pulse-blue 1.5s infinite;
+}
+
+.graph-node.can-link {
+  border-color: #10b981 !important;
+  cursor: crosshair;
+}
+
+.graph-node.selected {
+  border-color: #007AFF !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3) !important;
+}
+
+.graph-node-content {
+  padding: 16px;
+}
+
+.graph-node-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.graph-node-preview {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.graph-node-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #9ca3af;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.graph-node-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.graph-node:hover .graph-node-actions {
+  opacity: 1;
+}
+
+.graph-node-action-btn {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.graph-node-action-btn:hover {
+  background: #e5e7eb;
+  color: #374151;
+  transform: scale(1.1);
+}
+
+.graph-node-action-btn.read {
+  color: #3b82f6;
+}
+
+.graph-node-action-btn.read:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.graph-node-action-btn.edit {
+  color: #f59e0b;
+}
+
+.graph-node-action-btn.edit:hover {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.graph-node-action-btn.delete {
+  color: #ef4444;
+}
+
+.graph-node-action-btn.delete:hover {
+  background: #fecaca;
+  color: #dc2626;
+}
+
+.graph-node-action-btn.link {
+  color: #10b981;
+}
+
+.graph-node-action-btn.link:hover {
+  background: #d1fae5;
+  color: #059669;
+}
+
+/* Node Editing States */
+.graph-node-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.graph-node-textarea:focus {
+  border-color: #007AFF;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+}
+
+.graph-node-edit-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+.graph-node-save,
+.graph-node-cancel {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.graph-node-save {
+  background: #10b981;
+  color: white;
+}
+
+.graph-node-save:hover:not(:disabled) {
+  background: #059669;
+}
+
+.graph-node-save:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.graph-node-cancel {
+  background: #ef4444;
+  color: white;
+}
+
+.graph-node-cancel:hover {
+  background: #dc2626;
+}
+
+/* React Flow Handle Styling */
+.graph-node-handle {
+  width: 12px !important;
+  height: 12px !important;
+  background: #007AFF !important;
+  border: 2px solid white !important;
+  border-radius: 50% !important;
+}
+
+.graph-node-handle.source {
+  background: #10b981 !important;
+}
+
+.graph-node-handle.target {
+  background: #f59e0b !important;
+}
+
+.graph-node-handle:hover {
+  transform: scale(1.2) !important;
+}

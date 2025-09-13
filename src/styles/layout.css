@@ -1,0 +1,119 @@
+/* Layout System Styles */
+
+/* App Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Main Content Layout */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Allow flex children to shrink */
+  overflow: hidden;
+}
+
+/* Mode-specific content containers */
+.mode-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent mode-content from growing too large */
+}
+
+/* Graph mode full screen within mode-content */
+.graph-mode-full-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0; /* Important for flex children */
+}
+
+.notes-mode-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Sidebar Layout */
+.sidebar {
+  background: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+  flex-shrink: 0;
+  overflow-y: auto;
+  position: relative;
+  width: 300px;
+  min-width: 250px;
+  max-width: 600px;
+}
+
+.sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  z-index: 10;
+  border-right: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.sidebar-resize-handle:hover {
+  background: rgba(0, 123, 255, 0.1);
+  border-right-color: #007AFF;
+}
+
+/* Container */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive sidebar widths */
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 350px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .sidebar {
+    width: 400px;
+  }
+}
+
+@media (max-width: 800px) {
+  .sidebar {
+    width: 250px;
+    min-width: 200px;
+  }
+}
