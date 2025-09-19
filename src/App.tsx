@@ -14,6 +14,7 @@ import { useChat } from "./hooks/useChat";
 import { useToast } from "./hooks/useToast";
 import { useAppData } from "./contexts/AppDataContext";
 import { AppMode } from "./types";
+import "./styles/modals.css";
 
 function App() {
   // App state
@@ -32,10 +33,12 @@ function App() {
   // Unified data management
   const {
     data,
+    loadAllData,
     saveNote,
     updateNote,
     updateNoteWithTitle,
     deleteNote,
+    deleteCategory,
     setSelectedCategory,
     getFilteredNotes,
   } = useAppData();
@@ -212,10 +215,13 @@ function App() {
               onCategorySelect={handleCategorySelect}
               selectedCategory={data.uiState.selectedCategory}
               onCreateCategory={() => {}} // Handled by CategoryTree
-              onCategoryDeleted={() => {
-                // Auto-reload handled by context
+              onCategoryDeleted={async () => {
+                // Trigger a reload of all data to refresh the UI
+                await loadAllData();
               }}
+              onDeleteCategory={deleteCategory}
               reloadTrigger={data.uiState.categoryReloadTrigger}
+              contextCategories={data.categories}
             />
           )}
           <div 
@@ -307,19 +313,35 @@ function App() {
         </div>
       </div>
       
-      {/* Simple Category Picker Modal */}
+      {/* Enhanced Category Picker Modal */}
       {showCategoryPicker && (
         <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>Choose Category</h3>
-            <CategoryPicker
-              onSelect={handleCategoryPickerSave}
-              allowCreateNew={true}
-              showTitleInput={true}
-              defaultTitle={pendingNoteTitle}
-            />
+          <div className="modal">
+            <div className="modal-header">
+              <h3>Choose Category</h3>
+              <button 
+                className="modal-close-btn"
+                onClick={handleCategoryPickerCancel}
+                title="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className="modal-content">
+              <CategoryPicker
+                onSelect={handleCategoryPickerSave}
+                allowCreateNew={true}
+                showTitleInput={true}
+                defaultTitle={pendingNoteTitle}
+              />
+            </div>
             <div className="modal-actions">
-              <button onClick={handleCategoryPickerCancel}>Cancel</button>
+              <button 
+                className="btn btn-secondary"
+                onClick={handleCategoryPickerCancel}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>

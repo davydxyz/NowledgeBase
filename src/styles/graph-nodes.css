@@ -9,7 +9,6 @@
   max-width: 300px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  cursor: pointer;
   position: relative;
   overflow: hidden;
 }
@@ -87,6 +86,38 @@
   transition: opacity 0.2s;
 }
 
+.graph-node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.graph-node-expanded-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.graph-node-category {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.graph-node-timestamp {
+  font-size: 10px;
+  color: #9ca3af;
+  margin-top: 8px;
+  text-align: right;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 6px;
+}
+
 .graph-node:hover .graph-node-actions {
   opacity: 1;
 }
@@ -94,16 +125,17 @@
 .graph-node-action-btn {
   background: #f3f4f6;
   border: 1px solid #d1d5db;
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 10px;
+  font-size: 14px;
   color: #6b7280;
+  flex-shrink: 0;
 }
 
 .graph-node-action-btn:hover {

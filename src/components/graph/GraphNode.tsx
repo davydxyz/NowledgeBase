@@ -102,9 +102,8 @@ export const GraphNode = memo(({ data }: NodeProps<GraphNodeData>) => {
 
       <div 
         className={`graph-node-content ${isLinkingMode ? 'linking-mode' : ''} ${isLinkingSource ? 'linking-source' : ''} ${isHovered ? 'linking-target-hover' : ''}`}
-        style={{ borderLeftColor: getCategoryColor() }}
+        style={{ borderLeftColor: getCategoryColor(), cursor: !isLinkingMode ? 'pointer' : 'default' }}
         onClick={(e) => {
-          // Only handle node clicks if we're in linking mode
           if (isLinkingMode) {
             e.stopPropagation();
             onNodeClick(note.id);
@@ -119,13 +118,26 @@ export const GraphNode = memo(({ data }: NodeProps<GraphNodeData>) => {
       >
         {/* Node Header */}
         <div className="graph-node-header">
-          <div className="graph-node-title">
+          <div 
+            className="graph-node-title"
+            onClick={(e) => {
+              if (!isLinkingMode && !isEditing) {
+                e.stopPropagation();
+                handleOpenReader();
+              }
+            }}
+            style={{ cursor: !isLinkingMode ? 'pointer' : 'default' }}
+            title={!isLinkingMode ? "Click to edit note" : ""}
+          >
             {truncateText(note.title, 30)}
           </div>
           <div className="graph-node-actions">
             <button
               className="graph-node-action-btn"
-              onClick={() => setIsExpanded(!isExpanded)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(!isExpanded);
+              }}
               title={isExpanded ? 'Collapse' : 'Expand'}
             >
               {isExpanded ? '−' : '+'}
@@ -152,7 +164,12 @@ export const GraphNode = memo(({ data }: NodeProps<GraphNodeData>) => {
           ) : (
             <div 
               className="graph-node-text"
-              onClick={() => !isLinkingMode && handleOpenReader()}
+              onClick={(e) => {
+                if (!isLinkingMode && !isEditing) {
+                  e.stopPropagation();
+                  handleOpenReader();
+                }
+              }}
               style={{ cursor: !isLinkingMode ? 'pointer' : 'default' }}
               title={!isLinkingMode ? "Click to edit note" : ""}
             >
@@ -171,14 +188,20 @@ export const GraphNode = memo(({ data }: NodeProps<GraphNodeData>) => {
               <>
                 <button
                   className="graph-node-action-btn save"
-                  onClick={handleEdit}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEdit();
+                  }}
                   title="Save"
                 >
                   ✓
                 </button>
                 <button
                   className="graph-node-action-btn cancel"
-                  onClick={handleCancel}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCancel();
+                  }}
                   title="Cancel"
                 >
                   ✕
@@ -188,7 +211,10 @@ export const GraphNode = memo(({ data }: NodeProps<GraphNodeData>) => {
               <>
                 <button
                   className="graph-node-action-btn delete"
-                  onClick={handleDeleteClick}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteClick();
+                  }}
                   title="Delete"
                 >
                   🗑️

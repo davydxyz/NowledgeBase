@@ -9,7 +9,9 @@
 @import './styles/chat-mode.css';
 @import './styles/notes-system.css';
 @import './styles/category-tree.css';
+@import './styles/category-picker.css';
 @import './styles/layout.css';
 @import './styles/graph-core.css';
 @import './styles/graph-nodes.css';
 @import './styles/forms.css';
+@import './styles/modals.css';

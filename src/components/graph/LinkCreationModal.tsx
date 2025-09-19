@@ -86,7 +86,14 @@ export function LinkCreationModal({
             <div className="link-note source-note">
               <span className="note-title">{sourceNoteTitle}</span>
             </div>
-            <div className="link-arrow" style={{ color: showCustomOptions ? (selectedColor === 'purple' ? '#8b5cf6' : '#eab308') : '#6b7280' }}>
+            <div 
+              className="link-arrow" 
+              style={{ 
+                color: showCustomOptions 
+                  ? (selectedColor === 'purple' ? '#8b5cf6' : '#eab308') 
+                  : '#6b7280' 
+              }}
+            >
               {showCustomOptions ? (isDirectional ? '→' : '↔') : (linkTypes.find(t => t.value === selectedLinkType)?.directional ? '→' : '↔')}
             </div>
             <div className="link-note target-note">
@@ -96,12 +103,12 @@ export function LinkCreationModal({
 
           <div className="link-type-section">
             <label>Link Type:</label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div className="link-type-buttons">
               {linkTypes.map((type) => (
                 <button
                   key={type.value}
                   type="button"
-                  className={`btn ${selectedLinkType === type.value ? 'btn-primary' : 'btn-secondary'}`}
+                  className={`link-type-btn ${selectedLinkType === type.value ? 'selected' : ''}`}
                   onClick={() => {
                     setSelectedLinkType(type.value);
                     setShowCustomOptions(type.value === 'OptionalLabel');
@@ -111,18 +118,9 @@ export function LinkCreationModal({
                       setIsDirectional(false);
                     }
                   }}
-                  style={{ 
-                    textAlign: 'left',
-                    background: selectedLinkType === type.value ? '#3b82f6' : '#f3f4f6',
-                    color: selectedLinkType === type.value ? 'white' : '#374151',
-                    border: '1px solid #d1d5db',
-                    padding: '8px 12px',
-                    borderRadius: '6px',
-                    cursor: 'pointer'
-                  }}
                 >
-                  <div style={{ fontWeight: 'bold' }}>{type.label}</div>
-                  <div style={{ fontSize: '11px', opacity: 0.8 }}>{type.description}</div>
+                  <div className="link-type-label">{type.label}</div>
+                  <div className="link-type-description">{type.description}</div>
                 </button>
               ))}
             </div>
@@ -130,7 +128,7 @@ export function LinkCreationModal({
 
           {showCustomOptions && (
             <>
-              <div className="link-label-section" style={{ marginBottom: '16px' }}>
+              <div className="link-label-section">
                 <label htmlFor="custom-link-label">Custom Label:</label>
                 <input
                   id="custom-link-label"
@@ -142,67 +140,40 @@ export function LinkCreationModal({
                 />
               </div>
 
-              <div className="link-color-section" style={{ marginBottom: '16px' }}>
-            <label>Link Color:</label>
-            <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-              {[{ value: 'purple', label: '🟣 Purple', color: '#8b5cf6' }, { value: 'yellow', label: '🟡 Yellow', color: '#eab308' }].map((colorOption) => (
-                <button
-                  key={colorOption.value}
-                  type="button"
-                  onClick={() => setSelectedColor(colorOption.value as LinkColor)}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: '6px',
-                    border: `2px solid ${selectedColor === colorOption.value ? colorOption.color : '#d1d5db'}`,
-                    background: selectedColor === colorOption.value ? colorOption.color + '20' : '#f9fafb',
-                    color: selectedColor === colorOption.value ? colorOption.color : '#374151',
-                    cursor: 'pointer',
-                    fontSize: '12px',
-                    fontWeight: selectedColor === colorOption.value ? 'bold' : 'normal'
-                  }}
-                >
-                  {colorOption.label}
-                </button>
-              ))}
-            </div>
-          </div>
+              <div className="link-color-section">
+                <label>Link Color:</label>
+                <div className="option-buttons">
+                  {[{ value: 'purple', label: '🟣 Purple' }, { value: 'yellow', label: '🟡 Yellow' }].map((colorOption) => (
+                    <button
+                      key={colorOption.value}
+                      type="button"
+                      className={`option-btn color-${colorOption.value} ${selectedColor === colorOption.value ? 'selected' : ''}`}
+                      onClick={() => setSelectedColor(colorOption.value as LinkColor)}
+                    >
+                      {colorOption.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          <div className="link-direction-section" style={{ marginBottom: '16px' }}>
-            <label>Arrow Direction:</label>
-            <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-              <button
-                type="button"
-                onClick={() => setIsDirectional(false)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: `2px solid ${!isDirectional ? '#3b82f6' : '#d1d5db'}`,
-                  background: !isDirectional ? '#3b82f620' : '#f9fafb',
-                  color: !isDirectional ? '#3b82f6' : '#374151',
-                  cursor: 'pointer',
-                  fontSize: '12px',
-                  fontWeight: !isDirectional ? 'bold' : 'normal'
-                }}
-              >
-                ↔ Two-way
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsDirectional(true)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: `2px solid ${isDirectional ? '#3b82f6' : '#d1d5db'}`,
-                  background: isDirectional ? '#3b82f620' : '#f9fafb',
-                  color: isDirectional ? '#3b82f6' : '#374151',
-                  cursor: 'pointer',
-                  fontSize: '12px',
-                  fontWeight: isDirectional ? 'bold' : 'normal'
-                }}
-              >
-                → One-way
-              </button>
-            </div>
+              <div className="link-direction-section">
+                <label>Arrow Direction:</label>
+                <div className="option-buttons">
+                  <button
+                    type="button"
+                    className={`option-btn ${!isDirectional ? 'selected' : ''}`}
+                    onClick={() => setIsDirectional(false)}
+                  >
+                    ↔ Two-way
+                  </button>
+                  <button
+                    type="button"
+                    className={`option-btn ${isDirectional ? 'selected' : ''}`}
+                    onClick={() => setIsDirectional(true)}
+                  >
+                    → One-way
+                  </button>
+                </div>
               </div>
             </>
           )}
@@ -231,10 +202,6 @@ export function LinkCreationModal({
             className="btn btn-primary" 
             onClick={handleConfirm}
             disabled={isCreating}
-            style={{ 
-              opacity: isCreating ? 0.7 : 1,
-              cursor: isCreating ? 'not-allowed' : 'pointer'
-            }}
           >
             {isCreating ? '🔄 Creating...' : 'Create Link'}
           </button>

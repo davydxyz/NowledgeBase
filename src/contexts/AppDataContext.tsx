@@ -290,7 +290,12 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
     try {
       const note = await ApiService.saveNote(content, categoryPath || [], customTitle);
       dispatch({ type: 'ADD_NOTE', note });
-      // Trigger category reload to update note counts
+      
+      // Reload categories from backend to ensure new categories are shown
+      const updatedCategories = await ApiService.getCategories();
+      dispatch({ type: 'SET_CATEGORIES', categories: updatedCategories });
+      
+      // Also trigger category reload counter for other components
       dispatch({ type: 'TRIGGER_CATEGORY_RELOAD' });
       dispatch({ type: 'SET_ERROR', dataType: 'notes', error: null });
       return note;
@@ -331,7 +336,12 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
     try {
       await ApiService.deleteNote(id);
       dispatch({ type: 'DELETE_NOTE', id });
-      // Trigger category reload to update note counts
+      
+      // Reload categories from backend to update note counts
+      const updatedCategories = await ApiService.getCategories();
+      dispatch({ type: 'SET_CATEGORIES', categories: updatedCategories });
+      
+      // Also trigger category reload counter for other components
       dispatch({ type: 'TRIGGER_CATEGORY_RELOAD' });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete note';
@@ -437,11 +447,25 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
   
   const deleteCategory = useCallback(async (id: string): Promise<void> => {
     try {
+      console.log('🗑️ Context: Starting category deletion for ID:', id);
       await ApiService.deleteCategory(id);
-      dispatch({ type: 'DELETE_CATEGORY', id });
-      // Also reload notes as they might be affected
-      const notes = await ApiService.getNotes();
+      console.log('🗑️ Context: Backend deletion completed');
+      
+      // Reload both categories and notes from backend to get fresh data
+      const [categories, notes] = await Promise.all([
+        ApiService.getCategories(),
+        ApiService.getNotes()
+      ]);
+      
+      console.log('🗑️ Context: Fresh data loaded - categories:', categories.length, 'notes:', notes.length);
+      console.log('🗑️ Context: Categories data:', categories.map(c => ({id: c.id, name: c.name, count: c.note_count})));
+      
+      dispatch({ type: 'SET_CATEGORIES', categories });
       dispatch({ type: 'SET_NOTES', notes });
+      // Trigger category reload for CategoryTree component
+      dispatch({ type: 'TRIGGER_CATEGORY_RELOAD' });
+      
+      console.log('🗑️ Context: State dispatched successfully');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete category';
       dispatch({ type: 'SET_ERROR', dataType: 'categories', error: errorMessage });

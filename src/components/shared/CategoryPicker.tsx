@@ -48,6 +48,66 @@ export function CategoryPicker({ onSelect, selectedPath, allowCreateNew = true, 
     category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const getCategoryColor = (categoryPath: string[]) => {
+    // Generate a consistent color based on the category path
+    if (categoryPath.length === 0) return '#6b7280';
+    
+    const categoryString = categoryPath.join('/');
+    let hash = 0;
+    for (let i = 0; i < categoryString.length; i++) {
+      hash = categoryString.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    
+    // Create more vibrant and diverse colors
+    const hue = Math.abs(hash) % 360;
+    const saturation = 65 + (Math.abs(hash >> 8) % 25); // 65-90%
+    const lightness = 45 + (Math.abs(hash >> 16) % 20); // 45-65%
+    
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  };
+
+  const getCategoryIcon = (categoryPath: string[]) => {
+    // Different icons for different category levels and types
+    if (categoryPath.length === 0) return '📁';
+    
+    const categoryName = categoryPath[categoryPath.length - 1].toLowerCase();
+    
+    // Icon mapping based on category name
+    const iconMap: { [key: string]: string } = {
+      'tech': '💻', 'technology': '💻', 'technical': '💻',
+      'work': '💼', 'job': '💼', 'career': '💼',
+      'personal': '👤', 'private': '👤',
+      'ideas': '💡', 'thoughts': '💭',
+      'learning': '📚', 'education': '🎓', 'study': '📖',
+      'projects': '🚀', 'project': '🚀',
+      'notes': '📝', 'memo': '📝',
+      'chat': '💬', 'conversation': '💬',
+      'research': '🔬', 'experiment': '🧪',
+      'design': '🎨', 'creative': '🎨',
+      'finance': '💰', 'money': '💰', 'budget': '💳',
+      'health': '🏥', 'fitness': '💪', 'medical': '⚕️',
+      'travel': '✈️', 'vacation': '🏖️',
+      'food': '🍽️', 'recipe': '👨‍🍳', 'cooking': '👨‍🍳',
+      'music': '🎵', 'audio': '🎧',
+      'video': '🎬', 'movies': '🎬',
+      'books': '📚', 'reading': '📖',
+      'games': '🎮', 'gaming': '🕹️',
+      'sports': '⚽', 'exercise': '🏃‍♂️'
+    };
+    
+    // Check for exact matches first
+    for (const [key, icon] of Object.entries(iconMap)) {
+      if (categoryName.includes(key)) {
+        return icon;
+      }
+    }
+    
+    // Default based on category level
+    if (categoryPath.length === 1) return '📂'; // Root categories
+    if (categoryPath.length === 2) return '📁'; // First level subcategories  
+    return '📄'; // Deep subcategories
+  };
+
   const handleCategorySelect = (category: Category) => {
     // If title input is shown, pass the title (empty or not - backend will generate default if needed)
     onSelect(category.path, showTitleInput ? (noteTitle.trim() || undefined) : undefined);
@@ -74,8 +134,26 @@ export function CategoryPicker({ onSelect, selectedPath, allowCreateNew = true, 
       setNewCategoryName("");
       setSelectedParentPath(null);
       setShowCreateForm(false);
+      
+      // Clear contentEditable content
+      const inputElement = document.querySelector('.category-picker-input') as HTMLDivElement;
+      if (inputElement) {
+        inputElement.textContent = '';
+      }
     } catch (error) {
       console.error("Failed to create category:", error);
+    }
+  };
+
+  const resetForm = () => {
+    setShowCreateForm(false);
+    setNewCategoryName("");
+    setSelectedParentPath(null);
+    
+    // Clear contentEditable content
+    const inputElement = document.querySelector('.category-picker-input') as HTMLDivElement;
+    if (inputElement) {
+      inputElement.textContent = '';
     }
   };
 
@@ -113,9 +191,9 @@ export function CategoryPicker({ onSelect, selectedPath, allowCreateNew = true, 
               <div className="category-content">
                 <div 
                   className="category-icon"
-                  style={{ backgroundColor: rootCategory.color || '#6c757d' }}
+                  style={{ backgroundColor: getCategoryColor(rootCategory.path) }}
                 >
-                  📁
+                  {getCategoryIcon(rootCategory.path)}
                 </div>
                 <span className="category-name">{rootCategory.name}</span>
                 <span className="note-count">{rootCategory.note_count}</span>
@@ -202,9 +280,9 @@ export function CategoryPicker({ onSelect, selectedPath, allowCreateNew = true, 
                   <div className="subcategory-indent">└──</div>
                   <div 
                     className="category-icon"
-                    style={{ backgroundColor: subCategory.color || '#6c757d' }}
+                    style={{ backgroundColor: getCategoryColor(subCategory.path) }}
                   >
-                    📄
+                    {getCategoryIcon(subCategory.path)}
                   </div>
                   <span className="category-name">{subCategory.name}</span>
                   <span className="note-count">{subCategory.note_count}</span>
@@ -290,32 +368,41 @@ export function CategoryPicker({ onSelect, selectedPath, allowCreateNew = true, 
               <h4>Create Root Category</h4>
               <button 
                 className="close-form-btn"
-                onClick={() => {
-                  setShowCreateForm(false);
-                  setNewCategoryName("");
-                  setSelectedParentPath(null);
-                }}
+                onClick={resetForm}
               >
                 ×
               </button>
             </div>
             
-            <input
-              type="text"
-              placeholder="Category name"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              className="new-category-input"
+            <div
+              contentEditable
+              suppressContentEditableWarning={true}
+              onInput={(e) => {
+                const text = (e.target as HTMLDivElement).textContent || '';
+                setNewCategoryName(text);
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
+                  e.preventDefault();
                   handleCreateNew();
                 } else if (e.key === 'Escape') {
-                  setShowCreateForm(false);
-                  setNewCategoryName("");
-                  setSelectedParentPath(null);
+                  e.preventDefault();
+                  resetForm();
                 }
               }}
-              autoFocus
+              onPaste={(e) => {
+                e.preventDefault();
+                const text = e.clipboardData.getData('text/plain');
+                document.execCommand('insertText', false, text);
+              }}
+              className="category-picker-input"
+              data-placeholder={newCategoryName ? '' : 'Category name'}
+              ref={(el) => {
+                if (el && showCreateForm && !selectedParentPath) {
+                  // Auto-focus when the form appears
+                  setTimeout(() => el.focus(), 100);
+                }
+              }}
             />
             
             <div className="create-form-actions">
@@ -328,11 +415,7 @@ export function CategoryPicker({ onSelect, selectedPath, allowCreateNew = true, 
               </button>
               <button
                 className="cancel-create-btn"
-                onClick={() => {
-                  setShowCreateForm(false);
-                  setNewCategoryName("");
-                  setSelectedParentPath(null);
-                }}
+                onClick={resetForm}
               >
                 Cancel
               </button>
