@@ -28,6 +28,8 @@
 - **Toast Notifications** - Instant feedback for all operations
 - **Always-on-Top Mode** - Stay productive without window switching
 
+<img width="1091" height="803" alt="Image" src="https://github.com/user-attachments/assets/07c84832-94d7-448f-adbd-a41ed3359e93" />
+
 ## 🚀 Quick Start
 
 ### Prerequisites
